@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Математикалық код: Құпияны аш!</title>
+<style>
+:root{--bg:#071426;--panel:#10233d;--panel2:#142c4b;--cyan:#39d5ff;--gold:#ffd166;--green:#45df9b;--red:#ff657a;--text:#eef7ff;--muted:#9fb5ce}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 15% 5%,#163b62 0,transparent 32%),radial-gradient(circle at 90% 15%,#173050 0,transparent 25%),var(--bg);color:var(--text);font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;min-height:100vh}
+button,input{font:inherit}button{cursor:pointer;border:0;border-radius:12px;padding:12px 17px;font-weight:800;transition:.2s}button:hover{transform:translateY(-2px);filter:brightness(1.1)}
+.wrap{max-width:1180px;margin:auto;padding:22px}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.brand{font-size:12px;letter-spacing:3px;color:var(--cyan);font-weight:900}.status{border:1px solid #315477;border-radius:99px;padding:8px 13px;color:var(--green);font-size:12px;font-weight:800;letter-spacing:1px}
+.hero{margin:26px 0 20px;padding:30px;border:1px solid #285078;border-radius:24px;background:linear-gradient(120deg,rgba(20,48,79,.96),rgba(8,24,43,.95));position:relative;overflow:hidden}
+.hero:after{content:"∑  π  √  %  ∞";position:absolute;right:2%;bottom:-14px;font-size:clamp(34px,7vw,76px);font-weight:900;color:#ffffff0b;letter-spacing:9px;white-space:nowrap}
+.kicker{color:var(--gold);font-size:12px;font-weight:900;letter-spacing:3px}.hero h1{font-size:clamp(30px,5vw,56px);line-height:1.02;margin:12px 0}.hero h1 span{color:var(--cyan)}.hero p{max-width:700px;color:var(--muted);line-height:1.6;margin:0}
+.grid{display:grid;grid-template-columns:1.45fr .8fr;gap:18px}.panel{background:linear-gradient(145deg,var(--panel),#0b1b30);border:1px solid #274665;border-radius:20px;padding:20px;box-shadow:0 14px 40px #0003}
+.panel h2{font-size:18px;margin:0 0 14px}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.field{background:#08182b;color:var(--text);border:1px solid #345574;border-radius:11px;padding:12px;width:100%;outline:none}.field:focus{border-color:var(--cyan);box-shadow:0 0 0 3px #39d5ff22}.muted{color:var(--muted)}.small{font-size:12px;color:var(--muted)}
+.primary{background:linear-gradient(90deg,#13bde8,#3979ff);color:white}.gold{background:var(--gold);color:#1d2632}.ghost{background:#1b3858;color:#d9efff;border:1px solid #345879}.danger{background:#522637;color:#ffdce2}
+.teams{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.team{background:#0b1c31;border:1px solid #294967;border-radius:13px;padding:12px;display:flex;justify-content:space-between;align-items:center;gap:8px}.team.active{border-color:var(--cyan);box-shadow:0 0 0 2px #39d5ff22}.team strong{font-size:13px}.score{color:var(--gold);font-weight:900}
+.progress{height:8px;background:#07111f;border-radius:20px;overflow:hidden;margin:12px 0 18px}.progress>div{height:100%;background:linear-gradient(90deg,var(--cyan),var(--green));width:0;transition:.3s}
+.stages{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:14px 0}.stagebtn{background:#0a1b30;color:#c6d8ea;border:1px solid #294967;text-align:left;padding:12px;border-radius:13px;min-height:76px}.stagebtn b{display:block;color:var(--cyan);font-size:11px;margin-bottom:6px}.stagebtn.done{border-color:#268c68;background:#0d302b}.stagebtn.current{border-color:var(--gold);box-shadow:0 0 0 2px #ffd16622}.stagebtn.done b{color:var(--green)}
+.stage-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}.timer{font-size:22px;font-weight:900;color:var(--gold);background:#07182a;border:1px solid #3c5976;border-radius:12px;padding:9px 13px;font-variant-numeric:tabular-nums}.mission{background:linear-gradient(100deg,#102b49,#0a1b30);border-left:4px solid var(--cyan);padding:14px;border-radius:10px;color:#dceeff;line-height:1.55;margin:14px 0}
+.tasks{display:grid;gap:10px}.task{background:#0a1b30;border:1px solid #294967;border-radius:13px;padding:13px}.task label{display:block;font-weight:700;font-size:14px;margin-bottom:9px}.task .field{max-width:260px}.task.ok{border-color:#268c68}.task.bad{border-color:#a3455a}.task .hint{font-size:11px;color:var(--muted);margin-top:6px}
+.result{min-height:25px;margin:12px 0;font-weight:800}.code-reveal{display:none;margin-top:14px;padding:18px;border:1px dashed var(--green);background:#0b3028;border-radius:14px;text-align:center}.code-reveal strong{font-size:36px;color:var(--green);letter-spacing:8px}
+.safe{background:linear-gradient(145deg,#1b2c43,#09192c);border:1px solid #45617f;border-radius:18px;padding:17px;text-align:center}.digits{display:flex;gap:7px;justify-content:center;margin:13px 0}.digit{width:39px;height:48px;border:1px solid #3d5a77;border-radius:8px;background:#061426;display:grid;place-items:center;font-size:22px;color:var(--cyan);font-weight:900}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;max-width:220px;margin:12px auto}.keypad button{padding:11px;background:#193653;color:white}.feedback{padding:11px;border-radius:10px;background:#0a1a2c;color:var(--muted);font-size:13px;min-height:40px}
+footer{text-align:center;color:#6f8ba8;font-size:11px;padding:25px}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.stages{grid-template-columns:repeat(2,1fr)}}@media(max-width:480px){.wrap{padding:13px}.hero{padding:22px}.teams{grid-template-columns:1fr}.stages{grid-template-columns:1fr 1fr}.panel{padding:15px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <div class="top"><div><div class="brand">MATH INTELLIGENCE • CLASSIFIED</div><div class="small">5-СЫНЫП · МАТЕМАТИКА АПТАЛЫҒЫ</div></div><div class="status">● ҚҰПИЯ МИССИЯ БЕЛСЕНДІ</div></div>
+ <section class="hero">
+  <div class="kicker">№ 005 / ОПЕРАЦИЯ «БІЛІМ»</div>
+  <h1>МАТЕМАТИКАЛЫҚ КОД:<br><span>ҚҰПИЯНЫ АШ!</span></h1>
+  <p>4 команда. Әр командада 4 агент. Алты кезең. Алты құпия сан. Бір жабық сейф. Командаңмен бірге математикалық сынақтардан өтіп, соңғы кодты тап!</p>
+ </section>
+ <div class="grid">
+  <main class="panel">
+   <h2>01 / Миссия картасы</h2>
+   <div class="row" style="justify-content:space-between"><span class="small">ОРЫНДАЛҒАН КЕЗЕҢДЕР</span><strong id="progressText">0 / 6</strong></div>
+   <div class="progress"><div id="progressBar"></div></div>
+   <div class="stages" id="stageNav"></div>
+   <div class="stage-head">
+    <div><div class="kicker" id="stageKicker">STAGE 01</div><h2 id="stageTitle" style="font-size:24px;margin:5px 0">Құпия хат</h2><div class="small" id="stageMeta">5 минут · Арифметикалық амалдар</div></div>
+    <div class="timer" id="timer">05:00</div>
+   </div>
+   <div class="mission" id="missionText">Агенттер! Құпия хаттағы өрнектерді дұрыс есептеңдер. Есепті толық шығарып, бір ғана жауабын енгізіңдер.</div>
+   <div class="tasks" id="tasks"></div>
+   <div class="row" style="margin-top:14px">
+    <button class="primary" id="checkBtn" onclick="checkStage()">ЖАУАПТАРДЫ ТЕКСЕРУ</button>
+    <button class="ghost" onclick="startTimer()">ТАЙМЕРДІ БАСТАУ</button>
+    <button class="ghost" onclick="resetTimer()">ҚАЙТА БАСТАУ</button>
+   </div>
+   <div class="result" id="result"></div>
+   <div class="code-reveal" id="reveal"><div class="small">ТАБЫЛҒАН ҚҰПИЯ САН</div><strong id="secretDigit">0</strong><div class="small">Келесі кезеңге өтуге болады!</div></div>
+   <div class="row" style="justify-content:space-between;margin-top:17px"><button class="ghost" onclick="prevStage()">← АЛДЫҢҒЫ</button><button class="gold" onclick="nextStage()">КЕЛЕСІ КЕЗЕҢ →</button></div>
+  </main>
+  <aside style="display:grid;gap:18px;align-content:start">
+   <section class="panel">
+    <h2>02 / Агенттер құрамы</h2>
+    <div class="small" style="margin-bottom:10px">4 команда · әр командада 4 оқушы. Белсенді команданы таңда; ұпай осы командаға жазылады.</div>
+    <div class="teams" id="teams"></div>
+    <div class="small" style="margin-top:10px">Әр команда: капитан · есептеуші · логик · код шешуші.</div>
+   </section>
+   <section class="panel">
+    <h2>03 / Командалық рейтинг</h2>
+    <div class="small" style="margin-bottom:10px">4 команда · 4 агенттен. Әр кезеңге +10, әр логикалық сынаққа +5 ұпай. Ең жоғары нәтиже: 85 ұпай.</div>
+    <div id="leaderboard" style="display:grid;gap:8px"></div>
+   </section>
+   <section class="panel">
+    <h2>04 / Құпия сейф</h2>
+    <div class="safe">
+     <div class="kicker">SECURITY VAULT</div><div style="font-size:36px;margin:7px">🔐</div>
+     <div class="small">АЛТЫ ТАҢБАЛЫ КОДТЫ ЕНГІЗ</div>
+     <div class="digits" id="digits"></div>
+     <div class="keypad" id="keypad"></div>
+     <div class="row" style="justify-content:center"><button class="ghost" onclick="clearCode()">ТАЗАЛАУ</button><button class="primary" onclick="unlock()">АШУ</button></div>
+     <div class="feedback" id="safeFeedback" style="margin-top:12px">6 кезеңнің құпия сандарын жина. Логикалық сынақтар қосымша ұпай береді!</div>
+    </div>
+   </section>
+   <section class="panel">
+    <h2>05 / Ереже</h2>
+    <ul class="small" style="line-height:1.8;padding-left:18px;margin:0">
+     <li>4 команда қатысады, әрқайсысында 4 оқушы.</li><li>Команда болып ақылдасыңдар.</li><li>Әр кезеңдегі барлық тапсырманы орындаңдар.</li><li>Дұрыс жауаптан кейін құпия сан ашылады.</li><li>Соңғы сейфті ашу үшін 6 сан қажет.</li>
+    </ul>
+   </section>
+  </aside>
+ </div>
+ <section class="panel" style="margin-top:18px" id="bonusPanel">
+  <div class="row" style="justify-content:space-between;align-items:center"><div><div class="kicker">BONUS / THINKING MODE</div><h2 style="font-size:22px;margin:5px 0 8px">06 / ЛОГИКАЛЫҚ АГЕНТ: ОЙЛАН ДА, ШЕШ!</h2><div class="small">Негізгі миссиядан бөлек 5 логикалық сынақ. Әр дұрыс жауапқа +5 бонус ұпай. Әр команда өз бетінше орындайды.</div></div><div class="status">+25 БОНУС ҰПАЙ</div></div>
+  <div id="bonusTasks" class="tasks" style="margin-top:15px"></div>
+ </section>
+ <footer>МАТЕМАТИКА АПТАЛЫҒЫ · «МАТЕМАТИКАЛЫҚ КОД: ҚҰПИЯНЫ АШ!» · 5-СЫНЫП</footer>
+</div>
+<script>
+const stages=[
+ {title:"Құпия хат",time:5,meta:"Амалдардың орындалу реті",mission:"Құпия хатта бір ғана күрделі өрнек жасырылған. Амалдардың орындалу ретін сақтап, өрнектің мәнін тап. Жауапты толық сан түрінде енгіз.",digit:"7",tasks:[
+  ["(840 : 12) + (36 × 4) − 207 = ?",["7"]]]},
+ {title:"Геометриялық лабиринт",time:6,meta:"Периметр және өлшем бірліктері",mission:"Құпия зертхананың тік төртбұрыш пішінді алаңының ұзындығы 18 м, ені 11 м. Алаңды толық қоршау керек, бірақ кіреберіс үшін 3 м жер ашық қалдырылады. Қоршауға неше метр материал қажет? Толық шешіп, жауапты енгіз.",digit:"5",tasks:[
+  ["Қоршауға қажет материалдың ұзындығы неше метр?",["55"]]]},
+ {title:"Логика тұзағы",time:6,meta:"Сандық заңдылық",mission:"Құпия сандық тізбектің әрбір келесі мүшесі алдыңғы санды 2-ге көбейтіп, 1 қосу арқылы алынады. Тізбек: 3, 7, 15, 31, 63, ... Келесі санды тап.",digit:"7",tasks:[
+  ["Тізбектің келесі мүшесі нешеге тең?",["127"]]]},
+ {title:"Сандар детективі",time:6,meta:"Натурал сандар · логикалық есеп",mission:"Үш дос 100 асықты бөлісті. Бірінші дос екіншісінен 8 асық артық алды, ал үшінші дос екіншісінен 4 асық кем алды. Үш дос әрқайсысы неше асықтан алғанын анықта. Алдымен екінші достың үлесін тап.",digit:"3",tasks:[
+  ["Екінші дос неше асық алды?",["32"]]]},
+ {title:"Ақылды агент",time:7,meta:"Дүкендегі есеп · функционалдық сауаттылық",mission:"Агент мектепке керек заттарды сатып алды: 3 дәптер – әрқайсысы 180 тг, 2 қалам – әрқайсысы 120 тг, 1 сызғыш – 150 тг. Ол кассаға 1000 теңге берді. Қайтарылатын ақшаны есепте. Барлық заттың құнын алдымен жеке-жеке есепте.",digit:"7",tasks:[
+  ["Сатушы агентке қанша теңге қайтаруы керек?",["70"]]]},
+ {title:"Соңғы код",time:7,meta:"Қозғалысқа арналған мәтіндік есеп",mission:"Құпия хабарды жеткізетін дрон 48 км/сағ жылдамдықпен 3 сағат ұшты. Дрон қанша километр жол жүрді? Есептеп, шыққан санның цифрларының қосындысын тап. Жауапқа цифрлар қосындысын енгіз.",digit:"9",tasks:[
+  ["Дрон жүрген жолдың цифрларының қосындысы нешеге тең?",["9"]]]}
+]
+let current=0,activeTeam=0,teams=["Зеректер","Алғырлар","Эйнштейндер","Пифагор"].map(n=>({name:n,score:0,solved:Array(6).fill(false),answers:Array(6).fill(null).map(()=>[]),bonusSolved:Array(5).fill(false)})),codeInput="",remaining=300,interval=null;
+const $=id=>document.getElementById(id);
+function normalize(v){return String(v).trim().toLowerCase().replace(/\s/g,"").replace(/,/g,".").replace(/⁄/g,"/")}
+function renderTeams(){
+ $("teams").innerHTML=teams.map((t,i)=>`<div class="team ${i===activeTeam?'active':''}" onclick="selectTeam(${i})"><strong>${t.name}<br><span class="small">4 агент</span></strong><span class="score">${t.score} ұ.</span></div>`).join("");
+ if($("leaderboard")) $("leaderboard").innerHTML=[...teams].map((t,i)=>({...t,original:i})).sort((a,b)=>b.score-a.score || b.solved.filter(Boolean).length-a.solved.filter(Boolean).length).map((t,i)=>`<div class="team ${t.original===activeTeam?'active':''}"><div><strong><span style="color:var(--gold)">#${i+1}</span> ${t.name}</strong><div class="small">${t.solved.filter(Boolean).length}/6 кезең орындалды</div></div><span class="score">${t.score} / 85 ұ.</span></div>`).join("");
+}
+function selectTeam(i){activeTeam=i;codeInput="";renderKeypad();renderTeams();renderStage();renderBonus();$("safeFeedback").textContent=teams[i].solved.every(Boolean)?"Бұл команда барлық кезеңді орындады. Сейф кодын енгіз!":"Белсенді команда: "+teams[i].name}
+function renderNav(){let solved=teams[activeTeam].solved;$("stageNav").innerHTML=stages.map((s,i)=>`<button class="stagebtn ${solved[i]?'done':''} ${i===current?'current':''}" onclick="goStage(${i})"><b>${solved[i]?'✓ ОРЫНДАЛДЫ':'КЕЗЕҢ '+String(i+1).padStart(2,'0')}</b>${s.title}</button>`).join("");let n=solved.filter(Boolean).length;$("progressText").textContent=n+" / 6";$("progressBar").style.width=(n/6*100)+"%"}
+function renderStage(){let s=stages[current],team=teams[activeTeam],done=team.solved[current];$("stageKicker").textContent="STAGE "+String(current+1).padStart(2,"0");$("stageTitle").textContent=s.title;$("stageMeta").textContent=s.time+" минут · "+s.meta+" · "+team.name;$("missionText").textContent=s.mission;$("tasks").innerHTML=s.tasks.map((t,i)=>`<div class="task ${done?'ok':''}" id="task${i}"><label>${i+1}. ${t[0]}</label><input class="field" id="answer${i}" autocomplete="off" placeholder="Жауабыңды енгіз..." ${done?'disabled':''} value="${team.answers[current][i]||''}"></div>`).join("");$("reveal").style.display=done?"block":"none";$("secretDigit").textContent=done?s.digit:"?";$("result").textContent=done?"✓ Бұл кезеңді "+team.name+" орындаған!":"";$("checkBtn").disabled=done;$("checkBtn").textContent=done?"КЕЗЕҢ ОРЫНДАЛДЫ":"ЖАУАПТАРДЫ ТЕКСЕРУ";resetTimer();renderNav()}
+function goStage(i){current=i;renderStage()}
+function checkStage(){let s=stages[current],team=teams[activeTeam],all=true;for(let i=0;i<s.tasks.length;i++){let el=$("answer"+i),v=normalize(el.value);team.answers[current][i]=el.value;let ok=s.tasks[i][1].some(a=>normalize(a)===v);$("task"+i).classList.toggle("ok",ok);$("task"+i).classList.toggle("bad",!ok);if(!ok)all=false}
+ if(all){team.solved[current]=true;team.score+=10;$("result").textContent="КЕРЕМЕТ! "+team.name+" дұрыс шешті. Құпия сан ашылды!";$("result").style.color="var(--green)";$("reveal").style.display="block";$("secretDigit").textContent=s.digit;beep(true);renderTeams();renderNav();$("checkBtn").disabled=true;$("checkBtn").textContent="КЕЗЕҢ ОРЫНДАЛДЫ"}else{$("result").textContent="Әлі де ойланыңдар! Қызыл түспен белгіленген жауапты қайта тексер."; $("result").style.color="var(--red)";beep(false)}}
+function nextStage(){if(current<5)goStage(current+1);else $("safeFeedback").textContent="Барлық кезең аяқталды. Енді сейфті аш!";}
+function prevStage(){if(current>0)goStage(current-1)}
+function timerText(){let m=Math.floor(remaining/60),s=remaining%60;$("timer").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");$("timer").style.color=remaining<=30?"var(--red)":"var(--gold)"}
+function startTimer(){if(interval)return;interval=setInterval(()=>{remaining--;timerText();if(remaining<=0){clearInterval(interval);interval=null;$("result").textContent="Уақыт аяқталды! Жауаптарыңды тексеріңдер.";$("result").style.color="var(--red)";beep(false)}},1000)}
+function resetTimer(){if(interval){clearInterval(interval);interval=null}remaining=stages[current].time*60;timerText()}
+
+const bonusQuestions=[
+ {q:"Сан қатарының заңдылығын тап: 1, 2, 4, 7, 11, 16, ... Келесі сан қандай?",a:["22"],hint:"Қосылатын сандарды байқа: +1, +2, +3, +4, +5..."},
+ {q:"Төрт дос бір-бірімен қол алысты. Әр жұп тек бір рет қол алысты. Барлығы неше қол алысу болды?",a:["6"],hint:"Әр дос қалған үшеуімен қол алысады, бірақ әр жұпты екі рет санама."},
+ {q:"Сырттай бірдей 8 шардың біреуі ғана ауыр. Табақшалы таразымен ең аз дегенде неше рет өлшеп, ауыр шарды табуға болады?",a:["2","екі","2рет"],hint:"Шарларды 3, 3 және 2 болып үш топқа бөл. Алдымен 3 шарды 3 шармен салыстыр."},
+ {q:"Екі таңбалы санның ондық цифры бірлік цифрынан 2 есе үлкен. Екі цифрдың қосындысы 9. Ол қандай сан?",a:["63"],hint:"Бірлік цифрын x десек, ондық цифры 2x. Сонда 3x = 9."},
+ {q:"3 мысық 3 тышқанды 3 минутта ұстайды. 100 тышқанды 100 минутта ұстау үшін неше мысық керек?",a:["3","үш"],hint:"Бір мысық 3 минутта 1 тышқан ұстайды. 100 минутта бір мысық қанша тышқан ұстайды?"}
+];
+function renderBonus(){let done=teams[activeTeam].bonusSolved;$('bonusTasks').innerHTML=bonusQuestions.map((q,i)=>`<div class="task ${done[i]?'ok':''}" id="bonus${i}"><label>${i+1}. ${q.q}</label><div class="row"><input class="field" style="max-width:220px" id="bonusAnswer${i}" placeholder="Жауабың..." ${done[i]?'disabled':''}><button class="gold" onclick="checkBonus(${i})" ${done[i]?'disabled':''}>ТЕКСЕРУ</button></div><details style="margin-top:8px;color:var(--muted);font-size:12px"><summary style="cursor:pointer">Көмек керек пе? (ишара)</summary><p>${q.hint}</p></details><div class="small" id="bonusResult${i}" style="margin-top:7px">${done[i]?'✓ Дұрыс! +5 бонус ұпай':''}</div></div>`).join('')}
+function checkBonus(i){let team=teams[activeTeam];if(team.bonusSolved[i])return;let val=normalize($('bonusAnswer'+i).value);if(bonusQuestions[i].a.some(a=>normalize(a)===val)){team.bonusSolved[i]=true;team.score+=5;$('bonus'+i).classList.add('ok');$('bonusAnswer'+i).disabled=true;$('bonusResult'+i).textContent='✓ ДҰРЫС! +5 бонус ұпай';$('bonusResult'+i).style.color='var(--green)';$('bonus'+i).querySelector('button').disabled=true;renderTeams();beep(true)}else{$('bonus'+i).classList.add('bad');$('bonusResult'+i).textContent='Әлі дұрыс емес. Ишараны ашып, қайта ойланып көр!';$('bonusResult'+i).style.color='var(--red)';beep(false)}}
+
+function renderKeypad(){$("digits").innerHTML=Array.from({length:6},(_,i)=>`<div class="digit">${codeInput[i]||"·"}</div>`).join("");$("keypad").innerHTML=[1,2,3,4,5,6,7,8,9,"←",0,"✓"].map(n=>`<button onclick="${n==='←'?'backCode()':n==='✓'?'unlock()':`addCode(${n})`}">${n}</button>`).join("")}
+function addCode(n){if(codeInput.length<6){codeInput+=n;renderKeypad()}}
+function backCode(){codeInput=codeInput.slice(0,-1);renderKeypad()}
+function clearCode(){codeInput="";renderKeypad();$("safeFeedback").textContent="Код тазартылды."}
+function unlock(){if(codeInput.length!==6){$("safeFeedback").textContent="Алты таңбалы кодты толық енгіз!";return}if(teams[activeTeam].solved.some(x=>!x)){$("safeFeedback").textContent="Бұл команда алдымен барлық алты кезеңді орындауы керек!";beep(false);return}let correct=stages.map(s=>s.digit).join("");if(codeInput===correct){$("safeFeedback").innerHTML="🎉 СЕЙФ АШЫЛДЫ! МИССИЯ ОРЫНДАЛДЫ!<br><strong style='color:var(--green)'>СЕНДЕР – МАТЕМАТИКАЛЫҚ АГЕНТТЕР!</strong>";$("safeFeedback").style.color="var(--green)";beep(true);confetti()}else{$("safeFeedback").textContent="Қате код! Кезеңдердегі сандарды ретімен тексеріп көр.";beep(false)}}
+function beep(good){try{let c=new(window.AudioContext||window.webkitAudioContext)(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=good?740:180;g.gain.value=.06;o.start();o.stop(c.currentTime+.18)}catch(e){}}
+function confetti(){for(let i=0;i<70;i++){let d=document.createElement("div");d.style.cssText=`position:fixed;z-index:99;left:${Math.random()*100}vw;top:-15px;width:8px;height:13px;background:${["#39d5ff","#ffd166","#45df9b","#ff657a"][i%4]};transform:rotate(${Math.random()*360}deg);transition:transform 2s,top 2s;`;document.body.appendChild(d);setTimeout(()=>{d.style.top="105vh";d.style.transform+=` translateX(${Math.random()*180-90}px)`},20);setTimeout(()=>d.remove(),2200)}}
+renderTeams();renderStage();renderBonus();renderKeypad();
+</script>
+</body>
+</html>
